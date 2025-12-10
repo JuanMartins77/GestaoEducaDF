@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajuda - Recuperação de Senha</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .help-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #f8f9fa;
+        }
+        .user-card {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #2196f3;
+        }
+        .security-qa {
+            background: #fff3e0;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+        .answer {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+        button {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #3730a3; }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🆘 Ajuda - Recuperação de Senha</h1>
+        
+        <div class="warning">
+            <strong>⚠️ Página de Ajuda para Testes</strong><br>
+            Esta página mostra as respostas das perguntas de segurança para facilitar os testes do sistema.
+            Em um sistema real, essas informações seriam confidenciais.
+        </div>
+
+        <div class="help-section">
+            <h3>🔐 Como Funciona a Recuperação</h3>
+            <ol>
+                <li><strong>Digite seu e-mail</strong> - O sistema busca sua conta</li>
+                <li><strong>Responda a pergunta de segurança</strong> - Baseada no seu ID de usuário</li>
+                <li><strong>Crie uma nova senha</strong> - Mínimo 6 caracteres</li>
+                <li><strong>Faça login</strong> - Use a nova senha</li>
+            </ol>
+        </div>
+
+        <div class="help-section">
+            <h3>👥 Usuários Disponíveis para Teste</h3>
+            
+            <div class="user-card">
+                <strong>👤 Administrador Padrão</strong><br>
+                <strong>Email:</strong> admin@escola.com<br>
+                <strong>ID:</strong> 1<br>
+                <div class="security-qa">
+                    <strong>Pergunta:</strong> Qual o nome da sua primeira escola?<br>
+                    <strong>Resposta:</strong> <span class="answer">escola primaria</span>
+                </div>
+            </div>
+
+            <div id="usersList"></div>
+        </div>
+
+        <div class="help-section">
+            <h3>❓ Perguntas e Respostas de Segurança</h3>
+            <p>As perguntas são selecionadas baseadas no ID do usuário:</p>
+            
+            <div class="security-qa">
+                <strong>ID 1:</strong> Qual o nome da sua primeira escola? → <span class="answer">escola primaria</span>
+            </div>
+            <div class="security-qa">
+                <strong>ID 2:</strong> Qual o nome do seu primeiro animal de estimação? → <span class="answer">rex</span>
+            </div>
+            <div class="security-qa">
+                <strong>ID 3:</strong> Em que cidade você nasceu? → <span class="answer">brasilia</span>
+            </div>
+            <div class="security-qa">
+                <strong>ID 4:</strong> Qual o nome de solteira da sua mãe? → <span class="answer">maria</span>
+            </div>
+            <div class="security-qa">
+                <strong>ID 5:</strong> Qual sua comida favorita? → <span class="answer">pizza</span>
+            </div>
+            <div class="security-qa">
+                <strong>ID 6:</strong> Qual o nome da sua rua favorita? → <span class="answer">rua das flores</span>
+            </div>
+            <div class="security-qa">
+                <strong>ID 7:</strong> Qual seu filme favorito? → <span class="answer">matrix</span>
+            </div>
+            <div class="security-qa">
+                <strong>ID 8:</strong> Qual o nome do seu melhor amigo de infância? → <span class="answer">joao</span>
+            </div>
+        </div>
+
+        <div class="help-section">
+            <h3>🧪 Testar Recuperação</h3>
+            <p>Para testar o sistema:</p>
+            <ol>
+                <li>Crie uma conta nova no sistema</li>
+                <li>Anote o email e veja qual ID foi atribuído</li>
+                <li>Use a pergunta/resposta correspondente ao ID</li>
+                <li>Teste a recuperação de senha</li>
+            </ol>
+            
+            <button onclick="criarUsuarioTeste()">Criar Usuário de Teste</button>
+            <button onclick="listarUsuarios()">Listar Usuários</button>
+            <button onclick="window.location.href='esqueci-senha.html'">Testar Recuperação</button>
+        </div>
+
+        <div class="help-section">
+            <h3>🔗 Links Úteis</h3>
+            <button onclick="window.location.href='index.html'">Login</button>
+            <button onclick="window.location.href='cadastro.html'">Cadastro</button>
+            <button onclick="window.location.href='esqueci-senha.html'">Recuperar Senha</button>
+            <button onclick="window.location.href='teste-sistema.html'">Teste Geral</button>
+        </div>
+    </div>
+
+    <!-- Sistema de Banco Local -->
+    <script src="js/local-database.js"></script>
+
+    <script>
+        function criarUsuarioTeste() {
+            if (!window.localDB) {
+                alert('Sistema de banco local não carregado!');
+                return;
+            }
+
+            const usuarios = localDB.getAll('usuarios');
+            const proximoId = Math.max(...usuarios.map(u => u.id || 0), 0) + 1;
+            
+            const novoUsuario = {
+                nome: `Usuário Teste ${proximoId}`,
+                email: `teste${proximoId}@exemplo.com`,
+                cpf: `000.000.000-${proximoId.toString().padStart(2, '0')}`,
+                telefone: `(61) 99999-${proximoId.toString().padStart(4, '0')}`,
+                cargo: 'professor',
+                senha: 'teste123'
+            };
+
+            try {
+                localDB.create('usuarios', novoUsuario);
+                alert(`✅ Usuário criado!\nEmail: ${novoUsuario.email}\nID: ${proximoId}\nSenha: teste123`);
+                listarUsuarios();
+            } catch (error) {
+                alert('❌ Erro ao criar usuário: ' + error.message);
+            }
+        }
+
+        function listarUsuarios() {
+            if (!window.localDB) {
+                alert('Sistema de banco local não carregado!');
+                return;
+            }
+
+            const usuarios = localDB.getAll('usuarios');
+            const container = document.getElementById('usersList');
+            
+            if (usuarios.length <= 1) {
+                container.innerHTML = '<p><em>Apenas o usuário administrador padrão existe. Crie mais usuários para testar.</em></p>';
+                return;
+            }
+
+            const securityQuestions = [
+                "Qual o nome da sua primeira escola?",
+                "Qual o nome do seu primeiro animal de estimação?",
+                "Em que cidade você nasceu?",
+                "Qual o nome de solteira da sua mãe?",
+                "Qual sua comida favorita?",
+                "Qual o nome da sua rua favorita?",
+                "Qual seu filme favorito?",
+                "Qual o nome do seu melhor amigo de infância?"
+            ];
+
+            const answers = [
+                'escola primaria', 'rex', 'brasilia', 'maria',
+                'pizza', 'rua das flores', 'matrix', 'joao'
+            ];
+
+            container.innerHTML = usuarios.filter(u => u.id > 1).map(usuario => {
+                const questionIndex = usuario.id % securityQuestions.length;
+                const question = securityQuestions[questionIndex];
+                const answer = answers[questionIndex];
+                
+                return `
+                    <div class="user-card">
+                        <strong>👤 ${usuario.nome}</strong><br>
+                        <strong>Email:</strong> ${usuario.email}<br>
+                        <strong>ID:</strong> ${usuario.id}<br>
+                        <strong>Cargo:</strong> ${usuario.cargo}<br>
+                        <div class="security-qa">
+                            <strong>Pergunta:</strong> ${question}<br>
+                            <strong>Resposta:</strong> <span class="answer">${answer}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Carregar usuários ao inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                listarUsuarios();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
